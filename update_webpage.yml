@@ -1,0 +1,16 @@
+# update_webpage.yml
+- name: Update Webpage Content
+  hosts: servers
+  become: yes
+  tasks:
+    - name: Copy updated HTML file
+      copy:
+        src: updated_index.html
+        dest: /var/www/html/index.html
+      notify: Restart nginx
+
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted
